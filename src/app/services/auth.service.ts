@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { jwtDecode } from 'jwt-decode';
 
 @Injectable({
   providedIn: 'root',
@@ -9,6 +10,10 @@ import { map } from 'rxjs/operators';
 export class AuthService {
   private readonly TOKEN_KEY = 'auth_token';
   private readonly API_URL = 'http://localhost:8080';
+  private authStateSubject = new BehaviorSubject<boolean>(
+    this.isAuthenticated()
+  );
+  authState$ = this.authStateSubject.asObservable();
 
   constructor(private http: HttpClient) {}
 
@@ -21,12 +26,14 @@ export class AuthService {
       .pipe(
         map((response) => {
           this.storeToken(response.token);
+          this.authStateSubject.next(true);
         })
       );
   }
 
   logout(): void {
     this.removeToken();
+    this.authStateSubject.next(false);
   }
 
   private storeToken(token: string): void {
@@ -43,5 +50,23 @@ export class AuthService {
 
   isAuthenticated(): boolean {
     return !!this.getToken();
+  }
+
+  getDecodedToken(): any {
+    const token = this.getToken();
+    if (token) {
+      return jwtDecode(token);
+    }
+    return null;
+  }
+
+  getUsername(): string | null {
+    const decodedToken = this.getDecodedToken();
+    return decodedToken ? decodedToken.sub : null;
+  }
+
+  getRoles(): string | null {
+    const decodedToken = this.getDecodedToken();
+    return decodedToken ? decodedToken.role : null;
   }
 }

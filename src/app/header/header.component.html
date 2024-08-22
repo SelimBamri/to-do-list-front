@@ -28,17 +28,54 @@
             >Home</a
           >
         </li>
+        @if (username) {
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            routerLink="rfvfr"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
+            aria-current="page"
+            href="#"
+            >My lists</a
+          >
+        </li>
+        }
       </ul>
-      <form class="d-flex">
-        <button
+      @if (username) {
+      <div class="d-flex nav-item dropdown">
+        <a
+          class="nav-link qwitcher-grypen-bold uname"
+          href="#"
+          id="navbarDropdown"
+          role="button"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          {{ username }}
+        </a>
+        <ul
+          class="dropdown-menu dropdown-menu-end"
+          aria-labelledby="navbarDropdown"
+        >
+          <li><a class="dropdown-item">Account info</a></li>
+          <li><a class="dropdown-item">Update my account</a></li>
+          <li><hr class="dropdown-divider" /></li>
+          <li><a class="dropdown-item" (click)="logout()">Logout</a></li>
+        </ul>
+      </div>
+      } @else {
+      <div class="d-flex">
+        <a
           class="btn btn-danger"
-          type="submit"
+          (click)="redirectToLogin()"
           style="margin-right: 0.5rem"
         >
-          Sign up
-        </button>
-        <button class="btn btn-danger" type="submit">Sign in</button>
-      </form>
+          Sign in</a
+        >
+        <a href="" class="btn btn-danger"> Sign up</a>
+      </div>
+      }
     </div>
   </div>
 </nav>
