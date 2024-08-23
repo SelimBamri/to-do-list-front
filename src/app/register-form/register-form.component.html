@@ -1,1 +1,65 @@
-<p>register-form works!</p>
+<div class="d-flex justify-content-center align-items-center">
+  <div class="card" style="text-align: center; max-width: 60%; padding: 3rem">
+    <img
+      src="../../assets/images/homepage.png"
+      width="20%"
+      class="mx-auto d-block"
+    />
+    <h1 class="card-title">Create an account</h1>
+    <div class="card-content" style="margin-top: 3rem">
+      <form #myform="ngForm" (ngSubmit)="onSubmit(myform)">
+        <div class="mb-3">
+          <input
+            ngModel
+            placeholder="Username"
+            type="text"
+            class="form-control"
+            name="username"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <input
+            ngModel
+            placeholder="First Name"
+            type="text"
+            class="form-control"
+            name="fname"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <input
+            ngModel
+            placeholder="Last Name"
+            type="text"
+            class="form-control"
+            name="lname"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <input
+            ngModel
+            type="password"
+            class="form-control"
+            name="password"
+            placeholder="Password"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <input
+            ngModel
+            type="password"
+            class="form-control"
+            name="confirmPassword"
+            placeholder="Confirm Password"
+            required
+          />
+        </div>
+        <button type="submit" class="btn btn-lg btn-primary">Submit</button>
+      </form>
+    </div>
+  </div>
+</div>

@@ -19,6 +19,10 @@ export class HeaderComponent implements OnInit {
     this.router.navigate(['/login']);
   }
 
+  redirectToRegister() {
+    this.router.navigate(['/register']);
+  }
+
   ngOnInit(): void {
     this.updateUsername();
     this.authSubscription = this.authService.authState$.subscribe(() => {
