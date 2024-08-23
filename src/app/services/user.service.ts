@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
+import { User } from '../models/user';
 
 @Injectable({
   providedIn: 'root',
@@ -18,5 +19,14 @@ export class UserService {
       password,
       fullName,
     });
+  }
+  getMyAccount(): Observable<User> {
+    return this.http.get<any>(`${this.API_URL}/user/`).pipe(
+      map((char: any) => ({
+        id: char.id,
+        fullName: char.fullName,
+        username: char.username,
+      }))
+    );
   }
 }
