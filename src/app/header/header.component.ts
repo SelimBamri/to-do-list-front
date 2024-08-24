@@ -24,6 +24,14 @@ export class HeaderComponent implements OnInit {
     this.router.navigate(['/login']);
   }
 
+  redirectToMyAccount() {
+    this.router.navigate(['/account']);
+  }
+
+  redirectToEditMyAccount() {
+    this.router.navigate(['/update']);
+  }
+
   redirectToRegister() {
     this.router.navigate(['/register']);
   }

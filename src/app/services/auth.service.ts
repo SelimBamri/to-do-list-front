@@ -10,9 +10,7 @@ import { jwtDecode } from 'jwt-decode';
 export class AuthService {
   private readonly TOKEN_KEY = 'auth_token';
   private readonly API_URL = 'http://localhost:8080';
-  private authStateSubject = new BehaviorSubject<boolean>(
-    this.isAuthenticated()
-  );
+  authStateSubject = new BehaviorSubject<boolean>(this.isAuthenticated());
   authState$ = this.authStateSubject.asObservable();
 
   constructor(private http: HttpClient) {}
@@ -34,6 +32,10 @@ export class AuthService {
   logout(): void {
     this.removeToken();
     this.authStateSubject.next(false);
+  }
+
+  deleteMyAccount(): Observable<any> {
+    return this.http.delete<any>(`${this.API_URL}/user/`);
   }
 
   private storeToken(token: string): void {
@@ -65,7 +67,7 @@ export class AuthService {
     return decodedToken ? decodedToken.sub : null;
   }
 
-  getRoles(): string | null {
+  getRole(): string | null {
     const decodedToken = this.getDecodedToken();
     return decodedToken ? decodedToken.role : null;
   }

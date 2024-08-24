@@ -10,11 +10,18 @@
           <span style="font-weight: 600">Username:</span> {{ user.username }}
         </p>
         <p>
-          <span style="font-weight: 600">Full name:</span> {{ user.fullName }}
+          <span style="font-weight: 600">First name:</span>
+          {{ user.fullName.split(" ")[0] }}
         </p>
-        <p><span style="font-weight: 600">Password:</span> ****</p>
+        <p>
+          <span style="font-weight: 600">Last name:</span>
+          {{ user.fullName.split(" ")[1] }}
+        </p>
+        <p><span style="font-weight: 600">Password:</span> ********</p>
       </div>
-      <button class="btn btn-danger">Edit my acoount</button>
+      <button class="btn btn-danger" (click)="redirectToEditMyAccount()">
+        Edit my account
+      </button>
     </div>
   </div>
 </div>

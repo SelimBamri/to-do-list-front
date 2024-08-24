@@ -29,4 +29,16 @@ export class UserService {
       }))
     );
   }
+
+  editMyAccount(
+    username: string,
+    fullName: string,
+    password: string | null
+  ): Observable<any> {
+    return this.http.put(`${this.API_URL}/user/`, {
+      username,
+      password,
+      fullName,
+    });
+  }
 }
