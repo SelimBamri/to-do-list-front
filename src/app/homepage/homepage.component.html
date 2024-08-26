@@ -10,7 +10,9 @@
     </p>
     @if (authenticated) {
     <div style="text-align: center; margin-top: 4rem">
-      <a href="" class="btn btn-lg btn-primary"> My TODO lists</a>
+      <a (click)="redirectToLists()" class="btn btn-lg btn-primary">
+        My TODO lists</a
+      >
     </div>
     } @else {
     <div class="row" style="text-align: center; margin-top: 4rem">

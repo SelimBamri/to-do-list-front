@@ -1,0 +1,36 @@
+<div>
+  <h1 class="title">My Todos</h1>
+  <form
+    #myform="ngForm"
+    (ngSubmit)="onSubmit(myform)"
+    style="margin-bottom: 1rem"
+    ngNativeValidate
+  >
+    <div class="row">
+      <div class="col-6">
+        <input
+          ngModel
+          placeholder="Todo List title"
+          type="text"
+          class="form-control"
+          name="title"
+          required
+        />
+      </div>
+      <div class="col-6">
+        <button type="submit" class="btn btn-primary">Add list</button>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="row" *ngIf="lists$ | async as lists; else loading">
+  <app-to-do-list-card
+    style="margin-bottom: 2rem"
+    class="col-3"
+    *ngFor="let ls of lists"
+    [toDoList]="ls"
+    (changed)="loadLists()"
+  >
+  </app-to-do-list-card>
+</div>
+<ng-template #loading></ng-template>

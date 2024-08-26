@@ -1,0 +1,15 @@
+<div class="card" style="padding: 1rem">
+  <div class="card-title">
+    <span class="title">{{ toDoList.title }}</span>
+    <a (click)="deleteList(toDoList.id)"
+      ><fa-icon class="del-ico" [icon]="faTrashCan"></fa-icon
+    ></a>
+  </div>
+  <div class="card-body">
+    <ul>
+      @for(element of toDoList.elements; track element.id){
+      <li></li>
+      }
+    </ul>
+  </div>
+</div>

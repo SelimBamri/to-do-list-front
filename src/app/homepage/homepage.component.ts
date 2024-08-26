@@ -22,6 +22,10 @@ export class HomepageComponent implements OnInit {
     this.router.navigate(['/register']);
   }
 
+  redirectToLists() {
+    this.router.navigate(['/lists']);
+  }
+
   ngOnInit(): void {
     this.updateStatus();
     this.authSubscription = this.authService.authState$.subscribe(() => {

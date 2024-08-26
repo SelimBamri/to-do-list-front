@@ -4,6 +4,7 @@ import { LoginFormComponent } from './login-form/login-form.component';
 import { RegisterFormComponent } from './register-form/register-form.component';
 import { AccountComponent } from './account/account.component';
 import { EditAccountComponent } from './edit-account/edit-account.component';
+import { TodosPageComponent } from './todos-page/todos-page.component';
 
 export const routes: Routes = [
   { path: '', component: HomepageComponent },
@@ -11,4 +12,5 @@ export const routes: Routes = [
   { path: 'register', component: RegisterFormComponent },
   { path: 'account', component: AccountComponent },
   { path: 'update', component: EditAccountComponent },
+  { path: 'lists', component: TodosPageComponent },
 ];
