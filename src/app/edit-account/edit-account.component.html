@@ -3,12 +3,14 @@
   *ngIf="user$ | async as user; else loading"
 >
   <div class="card" style="text-align: center; max-width: 60%; padding: 3rem">
-    <img
-      src="../../assets/images/homepage.png"
-      width="20%"
-      class="mx-auto d-block"
-    />
     <h1 class="card-title">Edit your account</h1>
+    <img
+      [src]="
+        url ? url : 'http://www.pngall.com/wp-content/uploads/5/Profile.png'
+      "
+      width="150rem"
+      class="mx-auto d-block rounded"
+    />
     <div class="card-content" style="margin-top: 3rem">
       <form
         #myform="ngForm"
@@ -17,18 +19,32 @@
       >
         <div class="mb-3">
           <input
+            #fileInput
+            class="form-control"
+            type="file"
+            (change)="onSelectFile($event)"
+            style="display: none"
+          />
+          <a class="img-in" (click)="fileInput.click()">Upload a picture</a>
+          <fa-icon
+            [icon]="faTrashCan"
+            class="del-ico"
+            (click)="cancelPhoto()"
+          />
+        </div>
+        <div class="mb-3">
+          <input
             [(ngModel)]="user.username"
             placeholder="Username"
             type="text"
             class="form-control"
             name="username"
-            value="{{ user.username }}"
             required
           />
         </div>
         <div class="mb-3">
           <input
-            [(ngModel)]="user.fullName.split(' ')[0]"
+            [(ngModel)]="user.lastName"
             placeholder="First Name"
             type="text"
             class="form-control"
@@ -38,7 +54,7 @@
         </div>
         <div class="mb-3">
           <input
-            [(ngModel)]="user.fullName.split(' ')[1]"
+            [(ngModel)]="user.firstName"
             placeholder="Last Name"
             type="text"
             class="form-control"

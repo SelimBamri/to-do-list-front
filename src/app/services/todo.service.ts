@@ -8,7 +8,9 @@ import { ToDoList } from '../models/to-do-list';
 })
 export class TodoService {
   private readonly API_URL = 'http://localhost:8080';
+
   constructor(private http: HttpClient) {}
+
   newList(title: string): Observable<any> {
     return this.http.post(`${this.API_URL}/todos/`, {
       title,
@@ -32,7 +34,36 @@ export class TodoService {
       );
   }
 
+  GetMyTodoById(id: number): Observable<ToDoList> {
+    return this.http
+      .get<any>(`${this.API_URL}/todos/${id}`)
+      .pipe(
+        map(
+          (todoList: any) =>
+            new ToDoList(
+              todoList.id,
+              todoList.title,
+              todoList.toDoListElement || []
+            )
+        )
+      );
+  }
+
   deleteToDo(id: number): Observable<any> {
     return this.http.delete(`${this.API_URL}/todos/${id}`);
+  }
+
+  deleteToDoElement(id: number): Observable<any> {
+    return this.http.delete(`${this.API_URL}/todos/element/${id}`);
+  }
+
+  newElement(title: string, id: number): Observable<any> {
+    return this.http.post(`${this.API_URL}/todos/${id}`, {
+      title,
+    });
+  }
+
+  checkElement(id: number): Observable<any> {
+    return this.http.put(`${this.API_URL}/todos/${id}`, {});
   }
 }

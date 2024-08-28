@@ -21,7 +21,7 @@ export class TodosPageComponent implements OnInit {
       next: () => {
         console.log('Successfully added List');
         this.loadLists();
-        form.reset;
+        form.reset();
       },
       error: (err) => {
         console.error('Failed to add list', err);

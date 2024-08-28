@@ -2,6 +2,8 @@ export class User {
   constructor(
     public id: number,
     public username: string,
-    public fullName: string
+    public firstName: string,
+    public lastName: string,
+    public photo: string | null
   ) {}
 }

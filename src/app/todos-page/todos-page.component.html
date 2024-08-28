@@ -26,7 +26,7 @@
 <div class="row" *ngIf="lists$ | async as lists; else loading">
   <app-to-do-list-card
     style="margin-bottom: 2rem"
-    class="col-3"
+    class="col-12 col-md-6 col-lg-4"
     *ngFor="let ls of lists"
     [toDoList]="ls"
     (changed)="loadLists()"

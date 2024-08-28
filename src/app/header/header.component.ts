@@ -3,6 +3,7 @@ import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { Subscription } from 'rxjs';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-header',
@@ -13,6 +14,7 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 })
 export class HeaderComponent implements OnInit {
   username: string | null = null;
+  photo: string | null = null;
   private authSubscription: Subscription | null = null;
   constructor(
     private router: Router,

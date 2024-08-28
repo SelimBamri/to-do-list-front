@@ -7,16 +7,21 @@ import { User } from '../models/user';
 import { Observable } from 'rxjs';
 import { AsyncPipe, NgIf } from '@angular/common';
 import { AuthService } from '../services/auth.service';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-edit-account',
   standalone: true,
-  imports: [FormsModule, MatSnackBarModule, AsyncPipe, NgIf],
+  imports: [FormsModule, MatSnackBarModule, AsyncPipe, NgIf, FontAwesomeModule],
   templateUrl: './edit-account.component.html',
   styleUrl: './edit-account.component.scss',
 })
 export class EditAccountComponent implements OnInit {
   user$!: Observable<User>;
+  url!: string | null;
+  faTrashCan = faTrashCan;
+
   constructor(
     private userService: UserService,
     private authService: AuthService,
@@ -30,6 +35,16 @@ export class EditAccountComponent implements OnInit {
     });
   }
 
+  onSelectFile(event: any) {
+    if (event.target.files && event.target.files[0]) {
+      var reader = new FileReader();
+      reader.readAsDataURL(event.target.files[0]);
+      console.log(event.target.files[0]);
+      reader.onload = (event: any) => {
+        this.url = event.target.result;
+      };
+    }
+  }
   onSubmit(form: NgForm) {
     if (form.invalid) {
       this.showSnackBar('The username and the name are required');
@@ -43,8 +58,10 @@ export class EditAccountComponent implements OnInit {
     this.userService
       .editMyAccount(
         form.value.username,
-        form.value.fname + ' ' + form.value.lname,
-        password
+        form.value.fname,
+        form.value.lname,
+        password,
+        this.url
       )
       .subscribe({
         next: (resp) => {
@@ -66,6 +83,16 @@ export class EditAccountComponent implements OnInit {
 
   ngOnInit(): void {
     this.user$ = this.userService.getMyAccount();
+    this.user$.subscribe({
+      next: (user) => {
+        if (user.photo) {
+          this.url = user.photo;
+        }
+      },
+      error: (err) => {
+        console.error('Failed to load user photo', err);
+      },
+    });
   }
 
   OnDeleteAccount() {
@@ -79,6 +106,21 @@ export class EditAccountComponent implements OnInit {
       error: (error) => {
         console.error('Error deleting account:', error);
         this.showSnackBar('Failed to delete account: ' + error);
+      },
+    });
+  }
+
+  cancelPhoto() {
+    this.user$.subscribe({
+      next: (user) => {
+        if (user.photo) {
+          this.url = user.photo;
+        } else {
+          this.url = null;
+        }
+      },
+      error: (err) => {
+        console.error('Failed to load user photo', err);
       },
     });
   }

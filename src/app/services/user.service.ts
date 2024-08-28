@@ -11,34 +11,44 @@ export class UserService {
   constructor(private http: HttpClient) {}
   signUp(
     username: string,
-    fullName: string,
-    password: string
+    firstName: string,
+    lastName: string,
+    password: string,
+    photo: string | null
   ): Observable<any> {
     return this.http.post(`${this.API_URL}/auth/signup`, {
       username,
       password,
-      fullName,
+      firstName,
+      lastName,
+      photo,
     });
   }
   getMyAccount(): Observable<User> {
     return this.http.get<any>(`${this.API_URL}/user/`).pipe(
       map((char: any) => ({
         id: char.id,
-        fullName: char.fullName,
+        firstName: char.firstName,
+        lastName: char.lastName,
         username: char.username,
+        photo: char.photo,
       }))
     );
   }
 
   editMyAccount(
     username: string,
-    fullName: string,
-    password: string | null
+    firstName: string,
+    lastName: string,
+    password: string,
+    photo: string | null
   ): Observable<any> {
     return this.http.put(`${this.API_URL}/user/`, {
       username,
       password,
-      fullName,
+      firstName,
+      lastName,
+      photo,
     });
   }
 }

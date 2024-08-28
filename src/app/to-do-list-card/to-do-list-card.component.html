@@ -6,10 +6,60 @@
     ></a>
   </div>
   <div class="card-body">
-    <ul>
+    <ul style="margin-bottom: 1rem">
       @for(element of toDoList.elements; track element.id){
-      <li></li>
+      <li>
+        <fa-icon
+          [ngClass]="{
+            'comp-ico-f': element.completed,
+            'comp-ico': !element.completed
+          }"
+          [icon]="faSquareCheck"
+          (click)="checkElement(element.id)"
+          style="vertical-align: bottom; font-size: 1.3rem"
+        />
+        <span
+          [ngClass]="{
+            comp: element.completed
+          }"
+          style="margin: 0 0.5rem"
+          >{{ element.element }}</span
+        >
+        <fa-icon
+          [icon]="faDeleteLeft"
+          style="color: gray"
+          (click)="deleteElement(element.id)"
+        />
+      </li>
       }
     </ul>
+    <form
+      #myform="ngForm"
+      (ngSubmit)="onSubmit(myform)"
+      style="margin-bottom: 1rem"
+      ngNativeValidate
+    >
+      <div class="row" style="text-align: center">
+        <div class="col-6">
+          <input
+            ngModel
+            type="text"
+            class="no-border"
+            placeholder="New task"
+            name="element"
+            required
+          />
+        </div>
+        <div class="col-6">
+          <button type="submit" class="submit-button">
+            <fa-icon
+              class="add-ico"
+              [icon]="faCirclePlus"
+              style="vertical-align: bottom; font-size: 1.3rem"
+            ></fa-icon>
+          </button>
+        </div>
+      </div>
+    </form>
   </div>
 </div>
