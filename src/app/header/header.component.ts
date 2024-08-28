@@ -1,68 +1,79 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { AuthService } from '../services/auth.service';
-import { Subscription } from 'rxjs';
-import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { UserService } from '../services/user.service';
+import { User } from '../models/user';
+import { Subscription } from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { AsyncPipe, NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [RouterLink, RouterLinkActive, MatSnackBarModule],
+  imports: [RouterLink, RouterLinkActive, AsyncPipe, NgIf],
   templateUrl: './header.component.html',
-  styleUrl: './header.component.scss',
+  styleUrls: ['./header.component.scss'],
 })
-export class HeaderComponent implements OnInit {
-  username: string | null = null;
-  photo: string | null = null;
-  private authSubscription: Subscription | null = null;
+export class HeaderComponent implements OnInit, OnDestroy {
+  user: User | null = null;
+  isLoggedIn = false;
+
+  private subscriptions: Subscription = new Subscription();
+
   constructor(
     private router: Router,
     private authService: AuthService,
+    private userService: UserService,
     private snackBar: MatSnackBar
   ) {}
 
-  redirectToLogin() {
-    this.router.navigate(['/login']);
-  }
-
-  redirectToLists() {
-    this.router.navigate(['/lists']);
-  }
-
-  redirectToMyAccount() {
-    this.router.navigate(['/account']);
-  }
-
-  redirectToEditMyAccount() {
-    this.router.navigate(['/update']);
-  }
-
-  redirectToRegister() {
-    this.router.navigate(['/register']);
-  }
-
   ngOnInit(): void {
-    this.updateUsername();
-    this.authSubscription = this.authService.authState$.subscribe(() => {
-      this.updateUsername();
-    });
-  }
+    this.subscriptions.add(
+      this.authService.authState$.subscribe((isLoggedIn) => {
+        this.isLoggedIn = isLoggedIn;
+        if (isLoggedIn) {
+          this.subscriptions.add(
+            this.userService.getMyAccount().subscribe((user) => {
+              this.user = user;
+            })
+          );
+        } else {
+          this.user = null;
+        }
+      })
+    );
 
-  ngOnDestroy(): void {
-    if (this.authSubscription) {
-      this.authSubscription.unsubscribe();
+    if (this.isLoggedIn) {
+      this.userService.getMyAccount().subscribe((user) => {
+        this.authService.updateUser(user);
+      });
     }
   }
 
-  private updateUsername(): void {
-    this.username = this.authService.getUsername();
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
   }
 
   logout(): void {
     this.authService.logout();
     this.router.navigate(['/']);
     this.showSnackBar('Successfully logged out.');
+  }
+
+  redirectToMyAccount() {
+    this.router.navigate(['/account']);
+  }
+
+  redirectToLogin() {
+    this.router.navigate(['/login']);
+  }
+
+  redirectToRegister() {
+    this.router.navigate(['/register']);
+  }
+
+  redirectToEditMyAccount() {
+    this.router.navigate(['/update']);
   }
 
   private showSnackBar(message: string) {

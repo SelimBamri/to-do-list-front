@@ -27,8 +27,7 @@
             >Home</a
           >
         </li>
-        @if (username) {
-        <li class="nav-item">
+        <li class="nav-item" *ngIf="user">
           <a
             class="nav-link"
             routerLink="lists"
@@ -38,20 +37,30 @@
             >My lists</a
           >
         </li>
-        }
       </ul>
-      @if (username) {
-      <div class="d-flex nav-item dropdown">
+      <div class="d-flex nav-item dropdown" *ngIf="user; else notAuth">
         <a
-          class="nav-link qwitcher-grypen-bold uname"
+          class="nav-link qwitcher-grypen-bold uname d-flex align-items-center"
           href="#"
           id="navbarDropdown"
           role="button"
           data-bs-toggle="dropdown"
           aria-expanded="false"
         >
-          {{ username }}
+          <img
+            [src]="
+              user.photo
+                ? user.photo
+                : 'http://www.pngall.com/wp-content/uploads/5/Profile.png'
+            "
+            width="40rem"
+            height="40rem"
+            class="rounded-circle me-2"
+            alt="User Profile"
+          />
+          {{ user.username }}
         </a>
+
         <ul
           class="dropdown-menu dropdown-menu-end"
           aria-labelledby="navbarDropdown"
@@ -70,18 +79,18 @@
           <li><a class="dropdown-item" (click)="logout()">Logout</a></li>
         </ul>
       </div>
-      } @else {
-      <div class="d-flex">
-        <a
-          class="btn btn-danger"
-          (click)="redirectToLogin()"
-          style="margin-right: 0.5rem"
-        >
-          Sign in</a
-        >
-        <a (click)="redirectToRegister()" class="btn btn-danger"> Sign up</a>
-      </div>
-      }
+      <ng-template #notAuth>
+        <div class="d-flex">
+          <a
+            class="btn btn-danger"
+            (click)="redirectToLogin()"
+            style="margin-right: 0.5rem"
+          >
+            Sign in</a
+          >
+          <a (click)="redirectToRegister()" class="btn btn-danger"> Sign up</a>
+        </div>
+      </ng-template>
     </div>
   </div>
 </nav>

@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { jwtDecode } from 'jwt-decode';
+import { User } from '../models/user';
 
 @Injectable({
   providedIn: 'root',
@@ -12,6 +13,7 @@ export class AuthService {
   private readonly API_URL = 'http://localhost:8080';
   authStateSubject = new BehaviorSubject<boolean>(this.isAuthenticated());
   authState$ = this.authStateSubject.asObservable();
+  private currentUserSubject = new BehaviorSubject<User | null>(null);
 
   constructor(private http: HttpClient) {}
 
@@ -70,5 +72,9 @@ export class AuthService {
   getRole(): string | null {
     const decodedToken = this.getDecodedToken();
     return decodedToken ? decodedToken.role : null;
+  }
+
+  updateUser(user: User): void {
+    this.currentUserSubject.next(user);
   }
 }

@@ -69,10 +69,10 @@ export class EditAccountComponent implements OnInit {
           if (newToken) {
             this.authService.logout();
             localStorage.setItem('auth_token', newToken);
-            this.authService.authStateSubject.next(true);
           }
           this.showSnackBar('Account updated successfully.');
           this.router.navigate(['/account']);
+          this.authService.authStateSubject.next(true);
         },
         error: (err) => {
           console.error('Register failed', err);
@@ -113,7 +113,7 @@ export class EditAccountComponent implements OnInit {
   cancelPhoto() {
     this.user$.subscribe({
       next: (user) => {
-        if (user.photo) {
+        if (user.photo != this.url) {
           this.url = user.photo;
         } else {
           this.url = null;

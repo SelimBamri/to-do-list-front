@@ -1,4 +1,4 @@
-<div class="card" style="padding: 1rem">
+<div class="card" style="padding: 1rem 1rem 0">
   <div class="card-title">
     <span class="title">{{ toDoList.title }}</span>
     <a (click)="deleteList(toDoList.id)"
@@ -36,8 +36,8 @@
     <form
       #myform="ngForm"
       (ngSubmit)="onSubmit(myform)"
-      style="margin-bottom: 1rem"
       ngNativeValidate
+      autocomplete="off"
     >
       <div class="row" style="text-align: center">
         <div class="col-6">
