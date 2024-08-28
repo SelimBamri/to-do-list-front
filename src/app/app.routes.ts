@@ -5,6 +5,9 @@ import { RegisterFormComponent } from './register-form/register-form.component';
 import { AccountComponent } from './account/account.component';
 import { EditAccountComponent } from './edit-account/edit-account.component';
 import { TodosPageComponent } from './todos-page/todos-page.component';
+import { UsersListComponent } from './users-list/users-list.component';
+import { UserInfoComponent } from './user-info/user-info.component';
+import { AddAdminComponent } from './add-admin/add-admin.component';
 
 export const routes: Routes = [
   { path: '', component: HomepageComponent },
@@ -13,4 +16,7 @@ export const routes: Routes = [
   { path: 'account', component: AccountComponent },
   { path: 'update', component: EditAccountComponent },
   { path: 'lists', component: TodosPageComponent },
+  { path: 'users', component: UsersListComponent },
+  { path: 'user/:id', component: UserInfoComponent },
+  { path: 'addAdmin', component: AddAdminComponent },
 ];

@@ -3,7 +3,7 @@
   *ngIf="user$ | async as user; else loading"
 >
   <div class="card" style="text-align: center; max-width: 80%; padding: 3rem">
-    <h1 class="card-title">My account</h1>
+    <h1 class="card-title">User details</h1>
     <img
       [src]="
         user.photo
@@ -28,8 +28,8 @@
         </p>
         <p><span style="font-weight: 600">Password:</span> ********</p>
       </div>
-      <button class="btn btn-danger" (click)="redirectToEditMyAccount()">
-        Edit my account
+      <button class="btn btn-danger" (click)="deleteUser(user.id)">
+        Delete account
       </button>
     </div>
   </div>

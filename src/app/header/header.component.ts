@@ -16,6 +16,7 @@ import { AsyncPipe, NgIf } from '@angular/common';
 })
 export class HeaderComponent implements OnInit, OnDestroy {
   user: User | null = null;
+  role: string | null = null;
   isLoggedIn = false;
 
   private subscriptions: Subscription = new Subscription();
@@ -35,19 +36,15 @@ export class HeaderComponent implements OnInit, OnDestroy {
           this.subscriptions.add(
             this.userService.getMyAccount().subscribe((user) => {
               this.user = user;
+              this.role = this.authService.getRole();
             })
           );
         } else {
           this.user = null;
+          this.role = null;
         }
       })
     );
-
-    if (this.isLoggedIn) {
-      this.userService.getMyAccount().subscribe((user) => {
-        this.authService.updateUser(user);
-      });
-    }
   }
 
   ngOnDestroy(): void {

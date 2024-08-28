@@ -33,6 +33,6 @@ export class TodosPageComponent implements OnInit {
   }
 
   loadLists(): void {
-    this.lists$ = this.todoService.GetMyTodos();
+    this.lists$ = this.todoService.getMyTodos();
   }
 }

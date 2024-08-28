@@ -37,6 +37,26 @@
             >My lists</a
           >
         </li>
+        <li class="nav-item" *ngIf="role === 'ROLE_ADMIN'">
+          <a
+            class="nav-link"
+            routerLink="users"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
+            aria-current="page"
+            >Users</a
+          >
+        </li>
+        <li class="nav-item" *ngIf="role === 'ROLE_ADMIN'">
+          <a
+            class="nav-link"
+            routerLink="addAdmin"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
+            aria-current="page"
+            >Add admin</a
+          >
+        </li>
       </ul>
       <div class="d-flex nav-item dropdown" *ngIf="user; else notAuth">
         <a

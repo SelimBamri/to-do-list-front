@@ -17,7 +17,7 @@ export class TodoService {
     });
   }
 
-  GetMyTodos(): Observable<ToDoList[]> {
+  getMyTodos(): Observable<ToDoList[]> {
     return this.http
       .get<any[]>(`${this.API_URL}/todos/`)
       .pipe(

@@ -1,0 +1,56 @@
+<h1 class="title">Users</h1>
+
+<!-- Conditionally display loading message or users table -->
+<div class="row" *ngIf="users$ | async as users; else loading">
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Id</th>
+        <th scope="col">Photo</th>
+        <th scope="col">Username</th>
+        <th scope="col">First name</th>
+        <th scope="col">Last name</th>
+        <th scope="col">Password</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of users">
+        <td>{{ user.id }}</td>
+        <td>
+          <img
+            [src]="
+              user.photo
+                ? user.photo
+                : 'http://www.pngall.com/wp-content/uploads/5/Profile.png'
+            "
+            width="40rem"
+            height="40rem"
+            class="rounded-circle me-2"
+            alt="User Profile"
+          />
+        </td>
+        <td>{{ user.username }}</td>
+        <td>{{ user.firstName }}</td>
+        <td>{{ user.lastName }}</td>
+        <td>********</td>
+        <td style="font-size: 1.3rem">
+          <fa-icon
+            [icon]="faInfoCircle"
+            class="info-ico"
+            (click)="toUserDetails(user.id)"
+          />
+          |
+          <fa-icon
+            [icon]="faTrashCan"
+            (click)="deleteUser(user.id)"
+            class="del-ico"
+          />
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Fallback loading template -->
+<ng-template #loading>No users to display</ng-template>
