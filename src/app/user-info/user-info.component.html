@@ -5,11 +5,7 @@
   <div class="card" style="text-align: center; max-width: 80%; padding: 3rem">
     <h1 class="card-title">User details</h1>
     <img
-      [src]="
-        user.photo
-          ? user.photo
-          : 'http://www.pngall.com/wp-content/uploads/5/Profile.png'
-      "
+      [src]="user.photo ? user.photo : '../../assets/images/anonymous.png'"
       width="150rem"
       class="mx-auto d-block rounded"
     />

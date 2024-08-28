@@ -8,15 +8,42 @@ import { TodosPageComponent } from './todos-page/todos-page.component';
 import { UsersListComponent } from './users-list/users-list.component';
 import { UserInfoComponent } from './user-info/user-info.component';
 import { AddAdminComponent } from './add-admin/add-admin.component';
+import { authGuard } from './services/auth-guard';
+import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 
 export const routes: Routes = [
   { path: '', component: HomepageComponent },
   { path: 'login', component: LoginFormComponent },
   { path: 'register', component: RegisterFormComponent },
-  { path: 'account', component: AccountComponent },
-  { path: 'update', component: EditAccountComponent },
-  { path: 'lists', component: TodosPageComponent },
-  { path: 'users', component: UsersListComponent },
-  { path: 'user/:id', component: UserInfoComponent },
-  { path: 'addAdmin', component: AddAdminComponent },
+  { path: 'unauthorized', component: UnauthorizedComponent },
+  {
+    path: 'account',
+    component: AccountComponent,
+    canActivate: [() => authGuard(['ROLE_USER', 'ROLE_ADMIN'])],
+  },
+  {
+    path: 'update',
+    component: EditAccountComponent,
+    canActivate: [() => authGuard(['ROLE_USER', 'ROLE_ADMIN'])],
+  },
+  {
+    path: 'lists',
+    component: TodosPageComponent,
+    canActivate: [() => authGuard(['ROLE_USER', 'ROLE_ADMIN'])],
+  },
+  {
+    path: 'users',
+    component: UsersListComponent,
+    canActivate: [() => authGuard(['ROLE_ADMIN'])],
+  },
+  {
+    path: 'user/:id',
+    component: UserInfoComponent,
+    canActivate: [() => authGuard(['ROLE_ADMIN'])],
+  },
+  {
+    path: 'addAdmin',
+    component: AddAdminComponent,
+    canActivate: [() => authGuard(['ROLE_ADMIN'])],
+  },
 ];

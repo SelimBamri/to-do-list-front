@@ -17,3 +17,19 @@
     font-size: 2.3rem;
   }
 }
+
+/* Apply dropdown-menu-end for screens larger than 768px (Bootstrap's md breakpoint) */
+@media (min-width: 768px) {
+  .dropdown-menu {
+    right: 0;
+    left: auto;
+  }
+}
+
+/* Remove dropdown-menu-end styling for smaller screens */
+@media (max-width: 767.98px) {
+  .dropdown-menu {
+    right: auto;
+    left: 0;
+  }
+}

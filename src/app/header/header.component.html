@@ -69,9 +69,7 @@
         >
           <img
             [src]="
-              user.photo
-                ? user.photo
-                : 'http://www.pngall.com/wp-content/uploads/5/Profile.png'
+              user.photo ? user.photo : '../../assets/images/anonymous.png'
             "
             width="40rem"
             height="40rem"
@@ -81,10 +79,7 @@
           {{ user.username }}
         </a>
 
-        <ul
-          class="dropdown-menu dropdown-menu-end"
-          aria-labelledby="navbarDropdown"
-        >
+        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
           <li>
             <a class="dropdown-item" (click)="redirectToMyAccount()"
               >Account info</a
